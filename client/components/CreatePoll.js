@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {saveCreatedPoll} from '../redux/poll'
-// import {history} from '../history'
+import {history} from '../history'
 
 class CreatePoll extends React.Component {
   constructor() {
@@ -32,7 +32,7 @@ class CreatePoll extends React.Component {
   onSubmit(evt) {
     evt.preventDefault()
     this.props.createPoll(this.state)
-    // history.push('/');
+    this.props.history.push('/visualpoll')
   }
 
   addMoreOptions() {

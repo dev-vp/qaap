@@ -5,7 +5,12 @@ import {Switch, Router, Route} from 'react-router-dom'
 import history from './history'
 import store from './store.js'
 // import '../public/stylesheet.css';
-import {Home, CreatePoll} from './components/index'
+import {
+  Home,
+  AccessPoll,
+  CreatePoll,
+  ChartVisualization
+} from './components/index'
 
 // establishes socket connection
 // import './socket'
@@ -15,7 +20,9 @@ ReactDOM.render(
     <Router history={history}>
       <Switch>
         <Route path="/" component={Home} />
-        <Route path="/createpoll" component={CreatePoll} />
+        <Route path="/access" component={AccessPoll} />
+        <Route path="/create" component={CreatePoll} />
+        <Route path="/visualpoll" component={ChartVisualization} />
       </Switch>
     </Router>
   </Provider>,

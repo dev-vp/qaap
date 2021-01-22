@@ -1,3 +1,6 @@
 export {default as Home} from './Home'
 export {default as CreatePoll} from './CreatePoll'
 export {default as AccessPoll} from './AccessPoll'
+export {default as ChartVisualization} from './ChartVisualization'
+// export {default as ChartPie} from './ChartPie'
+// export {default as ChartBar} from './ChartBar'

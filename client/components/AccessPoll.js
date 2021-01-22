@@ -13,6 +13,8 @@ class AccessPoll extends React.Component {
   submitHandler = evt => {
     evt.preventDefault()
     this.props.findPoll(this.state.key)
+    // histoy.push redirect will need to be dependent on the key type (creator vs participant)
+    this.props.history.push('/visualpoll')
   }
 
   handleChange = evt => {

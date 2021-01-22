@@ -7,9 +7,9 @@ class Home extends React.Component {
     return (
       <div id="home-wrapper">
         <h1>Q+A Polling</h1>
-        <AccessPoll />
+        <AccessPoll history={this.props.history} />
         <hr /> {/****** REMOVE THIS WHEN STYLING ******/}
-        <CreatePoll />
+        <CreatePoll history={this.props.history} />
       </div>
     )
   }
