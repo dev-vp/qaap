@@ -42,7 +42,9 @@ class CreatePoll extends React.Component {
       vote4: 0,
       option5: null,
       vote5: 0,
-      pollSession: `${this.currentSession.getFullYear()}${this.currentSession.getMonth()}${this.currentSession.getDate()}${this.currentSession.getHours()}${this.currentSession.getMinutes()}`
+      pollSession: `${Math.ceil(
+        Math.random() * (8888 - 0) + 0
+      )}${this.currentSession.getFullYear()}${this.currentSession.getMonth()}${this.currentSession.getDate()}${this.currentSession.getHours()}${this.currentSession.getMinutes()}${this.currentSession.getMilliseconds()}`
     }
   }
 

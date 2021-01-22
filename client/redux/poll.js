@@ -29,7 +29,7 @@ export function saveCreatedPoll(newPoll) {
   }
 }
 
-export async function findPoll(sessionKey, user) {
+export function findPoll(sessionKey, user) {
   //HASH THE KEY HERE
   //let key=
   //if(user !== 'creator'){key=...} else {key=...}
@@ -48,11 +48,11 @@ export async function findPoll(sessionKey, user) {
 const initialState = {}
 
 export default function pollReducer(state = initialState, action) {
-  console.log('What is action? ', action)
   let newState
   switch (action.type) {
     case CREATE_POLL:
-      return (newState = {newPoll: action.newPoll})
+      newState = {newPoll: action.newPoll}
+      return newState
     default:
       return state
   }
