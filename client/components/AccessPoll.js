@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {findPoll} from '../redux/poll'
+// import {findPoll} from '../redux/poll'
 
 class AccessPoll extends React.Component {
   constructor() {
@@ -12,9 +12,8 @@ class AccessPoll extends React.Component {
 
   submitHandler = evt => {
     evt.preventDefault()
-    this.props.findPoll(this.state.key)
     // histoy.push redirect will need to be dependent on the key type (creator vs participant)
-    this.props.history.push('/visualpoll')
+    this.props.history.push(`/visualpoll/${this.state.key}`)
   }
 
   handleChange = evt => {

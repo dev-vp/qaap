@@ -19,10 +19,10 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
       <Switch>
-        <Route path="/" component={Home} />
         <Route path="/access" component={AccessPoll} />
         <Route path="/create" component={CreatePoll} />
-        <Route path="/visualpoll" component={ChartVisualization} />
+        <Route path="/visualpoll/:key" component={ChartVisualization} />
+        <Route path="/" component={Home} />
       </Switch>
     </Router>
   </Provider>,
