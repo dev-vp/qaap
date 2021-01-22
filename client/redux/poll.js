@@ -11,10 +11,10 @@ function createPoll(newPoll) {
   }
 }
 
-function accessPoll(sessionKey) {
+function accessPoll(poll) {
   return {
     type: ACCESS_POLL,
-    sessionKey
+    poll
   }
 }
 
@@ -29,10 +29,11 @@ export function saveCreatedPoll(newPoll) {
   }
 }
 
-export function findPoll(sessionKey, user) {
+export function findPoll(key) {
   //HASH THE KEY HERE
   //let key=
   //if(user !== 'creator'){key=...} else {key=...}
+  let sessionKey = key
   return async dispatch => {
     try {
       const response = await axios.get(`/api/session/${sessionKey}`)
@@ -53,6 +54,8 @@ export default function pollReducer(state = initialState, action) {
     case CREATE_POLL:
       newState = {newPoll: action.newPoll}
       return newState
+    case ACCESS_POLL:
+      return action.poll
     default:
       return state
   }
