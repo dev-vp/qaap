@@ -1,44 +1,17 @@
 'use strict'
 
-const db = require('../server/db')
-const {User, Product, Order} = require('../server/db/models')
-const dummyProducts = require('../seed-data.js')
-
-const userAccount = [
-  {email: 'cody@email.com', password: '123', isAdmin: false},
-  {email: 'admin@email.com', password: '123', isAdmin: true}
-]
+const {db, Poll, Option, SessionKey, Vote} = require('../server/db/')
+const {pollData, optionData, sessionData, voteData} = require('./seed-data')
 
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
-  const users = await Promise.all(
-    userAccount.map(account => User.create(account))
-  )
+  await Promise.all(sessionData.map(session => SessionKey.create(session)))
+  await Promise.all(pollData.map(poll => Poll.create(poll)))
+  await Promise.all(optionData.map(opt => Option.create(opt)))
+  await Promise.all(voteData.map(vote => Vote.create(vote)))
 
-  await Promise.all(dummyProducts.map(product => Product.create(product)))
-
-  const allProducts = await Product.findAll()
-  const singleUser = await User.findOne({where: {email: 'cody@email.com'}})
-
-  await Promise.all(allProducts.map(product => Order.create(product)))
-
-  const allOrders = await Order.findAll()
-
-  function random() {
-    return Math.floor(Math.random() * 10) + 1
-  }
-
-  let count = 50
-  while (count > 0) {
-    await allOrders[random()].addProduct(allProducts[random()])
-    count--
-  }
-
-  await singleUser.addOrder(allOrders[0])
-
-  console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)
 }
 

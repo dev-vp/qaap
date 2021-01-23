@@ -1,28 +1,36 @@
-const {Poll, PollSession} = require('../db')
+const {Poll, Option, SessionKey, Vote} = require('../db')
 const router = require('express').Router()
 
 // GET requests to /api/session/:sessionKey/
 router.get('/:sessionKey', async function(req, res, next) {
   try {
-    const session = await PollSession.findAll({
+    const session = await SessionKey.findOne({
       raw: true,
       where: {
-        sessionId: req.params.sessionKey
+        sessionKey: req.params.sessionKey
       }
     })
+    console.log(session.pollId)
 
-    const data = await Poll.findAll({
+    const poll = await Poll.findAll({
       where: {
-        pollSessionId: session[0].id
+        id: session.pollId
       },
       include: {
-        model: PollSession,
+        model: Option,
         where: {
-          sessionId: req.params.sessionKey
+          pollId: session.pollId
+        },
+        include: {
+          model: Vote,
+          where: {
+            pollId: session.pollId
+          }
         }
       }
     })
-    res.json(data)
+
+    res.json(poll)
   } catch (error) {
     next(error)
   }

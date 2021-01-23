@@ -4,12 +4,12 @@ const Option = require('./models/Option')
 const SessionKey = require('./models/SessionKey')
 const Vote = require('./models/Vote')
 
-Poll.belongsTo(SessionKey)
-
+Poll.hasOne(SessionKey)
 Poll.hasMany(Option)
+Poll.hasMany(Vote)
 Option.belongsTo(Poll)
-
-Vote.belongsTo(Option)
+Vote.belongsTo(Poll)
+Option.hasOne(Vote)
 
 module.exports = {
   db,
