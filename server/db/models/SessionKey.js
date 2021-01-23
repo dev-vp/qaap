@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const PollSession = db.define('pollSession', {
-  sessionId: {
+const SessionKey = db.define('sessionkey', {
+  sessionKey: {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
@@ -11,4 +11,4 @@ const PollSession = db.define('pollSession', {
   }
 })
 
-module.exports = PollSession
+module.exports = SessionKey
