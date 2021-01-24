@@ -7,7 +7,10 @@ class ChartVisualization extends React.Component {
   constructor() {
     super()
     this.state = {
-      pollType: 'bar'
+      pollType: 'bar',
+      key: '',
+      poll: {},
+      fetched: false
     }
   }
 
@@ -15,8 +18,14 @@ class ChartVisualization extends React.Component {
     await this.props.findPoll(this.props.match.params.key)
     this.setState({
       key: this.props.match.params.key,
-      poll: this.props.poll[0]
+      poll: this.props.poll[0],
+      fetched: true
     })
+    console.log('CHARTVISUAL - componentDidMount', this.props)
+  }
+
+  componentDidUpdate() {
+    console.log('CHARTVISUAL - componentDidUpdate', this.props)
   }
 
   clickHandler = evt => {
@@ -53,10 +62,15 @@ class ChartVisualization extends React.Component {
           </button>
         </div>
         <div>
-          {this.state.pollType === 'bar' ? (
-            <ChartBar poll={this.state.poll} />
+          {this.state.pollType === 'bar' && this.state.fetched ? (
+            <ChartBar poll={this.state.poll} skey={this.state.key} />
           ) : (
-            <ChartPie poll={this.state.poll} />
+            <h1>Loading</h1>
+          )}
+          {this.state.pollType === 'pie' && this.state.fetched ? (
+            <ChartPie poll={this.state.poll} skey={this.state.key} />
+          ) : (
+            <h1>Loading</h1>
           )}
         </div>
       </div>

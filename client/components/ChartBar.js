@@ -1,17 +1,28 @@
 import React from 'react'
 import * as d3 from 'd3'
+import {connect} from 'react-redux'
+import {findPoll} from '../redux/poll'
 
 class ChartBar extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      options: this.props.poll.options
+    }
+    console.log('CHARTBAR - Constructor', props)
     this.renderBarChart = this.renderBarChart.bind(this)
   }
 
   componentDidMount() {
+    // let data = this.props.options ? this.props.options: [{option: '', vote: {vote: 0}}]
+    // this.setState({options:data})
+    // await this.props.findPoll(this.props.skey)
+    console.log('CHARTBAR - compoenentDidMount', this.props)
     this.renderBarChart()
   }
 
   componentDidUpdate() {
+    console.log('CHARTBAR - compoenentDidUpdate', this.props)
     this.renderBarChart()
   }
 
@@ -26,17 +37,9 @@ class ChartBar extends React.Component {
       .select(node)
       // .append('svg')
       .attr('width', width + margin) //margin is accounted for because...
-      .attr('height', height + margin) //...the height variable is also used elsewhere
-    // .on('click', () => {console.log(d3.event)})
+      .attr('height', height + margin) //...the height
 
-    let data = [
-      {year: 2011, value: 45},
-      {year: 2012, value: 47},
-      {year: 2013, value: 52},
-      {year: 2014, value: 70},
-      {year: 2015, value: 75},
-      {year: 2016, value: 78}
-    ]
+    let data = this.state.options
 
     /* ORIGINALLY - X and Y Scale were predefined here (outside the d3.csv()) */
     //
@@ -51,7 +54,7 @@ class ChartBar extends React.Component {
       .scaleBand() //computes the scale by dividing the range into uniform bands.
       .domain(
         data.map(d => {
-          return d.year
+          return d.option
         })
       ) // array of years being passed in
       .range([0, width])
@@ -61,7 +64,8 @@ class ChartBar extends React.Component {
       .domain([
         0,
         d3.max(data, d => {
-          return d.value
+          console.log(d)
+          return d.vote.vote
         })
       ])
       .range([height, 0]) //stock price values (y) axis
@@ -77,7 +81,7 @@ class ChartBar extends React.Component {
         d3
           .axisLeft(yScale)
           .tickFormat(d => {
-            return `$${d}`
+            return `${d}`
           }) // Prefix our tick label with the dollar-sign ($)
           .ticks(10) // # of ticks to show
       )
@@ -87,7 +91,7 @@ class ChartBar extends React.Component {
       .attr('text-anchor', 'end')
       .attr('fill', 'black')
       .attr('font-size', 18) // .attr() or .style() works for font-size
-      .text('value')
+      .text('Votes')
 
     g
       .selectAll('bar')
@@ -98,14 +102,14 @@ class ChartBar extends React.Component {
       .attr('fill', 'steelblue') //fill color
       // Below, we are passing each data value (year & value) into each of the scale we created earlier (outside the domain). Based on the 'data'(value) we pass in to 'scale()', it is auto-scaled accordingly to the 'range' we set. If the value passed in that is outside the predefined 'range', 'clamping' configuration will be required...
       .attr('x', d => {
-        return xScale(d.year)
+        return xScale(d.option)
       }) // position of the bar on the x-axis
       .attr('y', d => {
-        return yScale(d.value)
+        return yScale(d.vote.vote)
       }) // starting position of the bar on the y-axis
       .attr('width', xScale.bandwidth()) // returns the width of each band
       .attr('height', d => {
-        return height - yScale(d.value)
+        return height - yScale(d.vote.vote)
       })
     // ^^ height of the SVG minus the corresponding y-value of the bar from the y-scale. Remember that the y-value here would be the tip of the bar since it is calculated from the origin and origin is at (0,0).
 
@@ -118,20 +122,33 @@ class ChartBar extends React.Component {
       .attr('y', height - 460)
       .attr('text-anchor', 'end')
       .attr('stroke', 'black')
-      .text('Year')
+      .text('Options')
 
-    svg
-      .append('text')
-      .attr('transform', 'translate(100,0)')
-      .attr('x', 50)
-      .attr('y', 50)
-      .attr('font-size', '24px')
-      .text('XYZ Stock Prices')
+    //   svg
+    //     .append('text')
+    //     .attr('transform', 'translate(100,0)')
+    //     .attr('x', 50)
+    //     .attr('y', 50)
+    //     .attr('font-size', '24px')
+    //     .text(`${this.state.question}`)
   }
 
   render() {
+    console.log('CHARTBAR - RENDER', this.props)
     return <svg ref={node => (this.node = node)} width={800} height={800} />
   }
 }
 
-export default ChartBar
+function mapStateToProps(state) {
+  return {
+    // poll: state.pollReducer
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    // findPoll: key => dispatch(findPoll(key))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChartBar)
