@@ -84,45 +84,24 @@ router.delete('/:sessionKey', async function(req, res, next) {
 
 // POST requests to /api/session/
 router.post('/', async function(req, res, next) {
-  const {pollSession} = req.body
-  const {
-    title,
-    chartType,
-    question,
-    option1,
-    vote1,
-    option2,
-    vote2,
-    option3,
-    vote3,
-    option4,
-    vote4,
-    option5,
-    vote5
-  } = req.body
-  try {
-    let newSession = await PollSession.create({sessionId: pollSession})
+  const {pollSession, poll, options} = req.body
 
-    const pollData = {
-      title,
-      chartType,
-      question,
-      option1,
-      vote1,
-      option2,
-      vote2,
-      option3,
-      vote3,
-      option4,
-      vote4,
-      option5,
-      vote5,
-      pollSessionId: newSession.id
+  try {
+    let newSession = await SessionKey.create({sessionKey: pollSession})
+    let newPoll = await Poll.create({
+      title: 'test',
+      chartType: 'bar',
+      question: 'What is this testing for?'
+    })
+    await newPoll.setSessionkey(newSession.id)
+    for (let i = 0; i < options.length; i++) {
+      const newOpt = await Option.create(options[i])
+      await newOpt.setPoll(newPoll.id)
+      const newVote = await Vote.create()
+      await newOpt.setVote(newVote.id)
+      await newVote.setPoll(newPoll.id)
     }
 
-    let newPoll = await Poll.create(pollData)
-
-    // await Poll.prototype.setPollSession(newSession)
     res.sendStatus(200)
   } catch (error) {
     next(error)
@@ -130,27 +109,3 @@ router.post('/', async function(req, res, next) {
 })
 
 module.exports = router
-
-/* CORRECT JSON Data Structure for PUT Request ('/api/session'): Tested/Confirmed with POSTMAN
-** REACT Component State Should be in the same format as below.
------------------------------------------------------------------
-{
-  "title": "test poll",
-  "chartType": "bar",
-  "question": "Test",
-  "option1": "option1",
-  "vote1": 0,
-  "option2": "option2",
-  "vote2": 8,
-  "option3": "option3",
-  "vote3": 5,
-  "option4": null,
-  "vote4": 0,
-  "option5": null,
-  "vote5": 0,
-  "pollSession": {
-      "id": 1,
-      "sessionId": "202107291830"
-  }
-}
-*/
