@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {ChartBar, ChartPie} from './index'
 import {findPoll} from '../redux/poll'
+import socket from '../socket'
 
 class ChartVisualization extends React.Component {
   constructor() {
@@ -22,6 +23,23 @@ class ChartVisualization extends React.Component {
       fetched: true
     })
     console.log('CHARTVISUAL - componentDidMount', this.props)
+
+    socket.on(`${this.state.key}`, message => {
+      console.log('Message Received in FrontEnd')
+
+      let newPollState = this.state.poll
+
+      for (let i = 0; i < newPollState.options.length; i++) {
+        if (newPollState.options[i].vote.id === Number(message.voteId)) {
+          newPollState.options[i].vote.vote++
+          console.log('before', this.state.poll.options[i])
+          this.setState({
+            poll: newPollState
+          })
+          console.log('after', this.state.poll.options[i])
+        }
+      }
+    })
   }
 
   componentDidUpdate() {

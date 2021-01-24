@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {findPoll} from '../redux/poll'
+import socket from '../socket'
 
 class VoteForm extends React.Component {
   constructor() {
@@ -23,7 +24,16 @@ class VoteForm extends React.Component {
       options: this.props.poll[0].options.filter(opt => opt.option !== null),
       fetched: true
     })
-    console.log('CHARTVISUAL - componentDidMount', this.props)
+    console.log('VoteForm - componentDidMount', this.props)
+  }
+
+  voteHandler(evt) {
+    evt.preventDefault()
+    let message = {
+      key: this.state.key.slice(3),
+      voteId: evt.target.value
+    }
+    socket.emit('vote', message)
   }
 
   render() {
@@ -35,7 +45,13 @@ class VoteForm extends React.Component {
           return (
             <div key={opt.id}>
               <label>{opt.option}</label>
-              <button type="button">Vote</button>
+              <button
+                type="button"
+                value={opt.vote.id}
+                onClick={evt => this.voteHandler(evt)}
+              >
+                Vote
+              </button>
             </div>
           )
         })}
