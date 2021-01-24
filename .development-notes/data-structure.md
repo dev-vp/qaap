@@ -2,7 +2,7 @@
 
 **Base Structure**
 
-* Obsolete (GET `/api/session/:sessionKey`):
+**Obsolete (GET `/api/session/:sessionKey`):**
 
 ```json
 {
@@ -26,7 +26,7 @@
 }
 ```
 
-* Improved (GET `/api/session/:sessionKey`):
+**Improved (GET `/api/session/:sessionKey`):**
 
 ```json
 [
@@ -71,6 +71,17 @@
     ]
   }
 ]
+```
+
+**Improved (POST `/api/session/`):**
+
+* Note: `"options":` takes an array of `option`
+
+```json
+{
+  "pollSession": "test",
+  "options": [{"option": "opt1"}, {"option": "opt2"}]
+}
 ```
 
 ### Magic Methods
