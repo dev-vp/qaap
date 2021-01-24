@@ -10,7 +10,8 @@ import {
   AccessPoll,
   CreatePoll,
   ChartVisualization,
-  VoteForm
+  VoteForm,
+  ConfirmPage
 } from './components/index'
 
 // establishes socket connection
@@ -24,6 +25,7 @@ ReactDOM.render(
         <Route path="/create" component={CreatePoll} />
         <Route path="/visualpoll/:key" component={ChartVisualization} />
         <Route path="/vote/:key" component={VoteForm} />
+        <Route path="/confirm/:key" component={ConfirmPage} />
         <Route path="/" component={Home} />
       </Switch>
     </Router>

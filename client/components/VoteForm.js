@@ -1,61 +1,59 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {findPoll} from '../redux/poll'
 
 class VoteForm extends React.Component {
   constructor() {
     super()
     this.state = {
-      options: {
-        option1: '',
-        vote1: 0,
-        option2: '',
-        vote2: 0,
-        option3: null,
-        vote3: 0,
-        option4: null,
-        vote4: 0,
-        option5: null,
-        vote5: 0
-      }
+      pollType: 'bar',
+      key: '',
+      poll: {},
+      options: [],
+      fetched: false
     }
   }
 
-  render() {
-    const optkeys = Object.keys(this.state.options)
-    // let options = [];
-    // for(let i = 0; i < optkeys.length; i++){
-    //   if(this.state[optkeys[i]] === null){
-    //     break
-    //   } else {
-    //     let optvote =
-    //     options.push()
-    //   }
-    // }
+  async componentDidMount() {
+    let PNVKey = this.props.match.params.key
+    await this.props.findPoll(PNVKey.slice(3))
+    this.setState({
+      key: this.props.match.params.key,
+      poll: this.props.poll[0],
+      options: this.props.poll[0].options.filter(opt => opt.option !== null),
+      fetched: true
+    })
+    console.log('CHARTVISUAL - componentDidMount', this.props)
+  }
 
+  render() {
     return (
       <div>
-        {
-          // optkeys.map(optkey => {
-          //   if(optkey.includes('option')){
-          //     return (
-          //         <label key={optkey}>{optkey.option}</label>
-          //     )
-          //   } else {
-          //     return <button type="button" key={optkey} >Vote</button>
-          //   }
-          // })
-        }
+        <h3>{this.state.poll.title}</h3>
+        <h1>{this.state.poll.question}</h1>
+        {this.state.options.map(opt => {
+          return (
+            <div key={opt.id}>
+              <label>{opt.option}</label>
+              <button type="button">Vote</button>
+            </div>
+          )
+        })}
       </div>
     )
   }
 }
 
 function mapStateToProps(state) {
-  return {}
+  return {
+    poll: state.pollReducer
+  }
 }
 
 function mapDispatchToProps(dispatch) {
-  return {}
+  return {
+    findPoll: key => dispatch(findPoll(key))
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(VoteForm)

@@ -65,12 +65,12 @@ class ChartVisualization extends React.Component {
           {this.state.pollType === 'bar' && this.state.fetched ? (
             <ChartBar poll={this.state.poll} skey={this.state.key} />
           ) : (
-            <h1>Loading</h1>
+            <h1 />
           )}
           {this.state.pollType === 'pie' && this.state.fetched ? (
             <ChartPie poll={this.state.poll} skey={this.state.key} />
           ) : (
-            <h1>Loading</h1>
+            <h1 />
           )}
         </div>
       </div>

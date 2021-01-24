@@ -1,7 +1,5 @@
 import React from 'react'
 import * as d3 from 'd3'
-import {connect} from 'react-redux'
-import {findPoll} from '../redux/poll'
 
 class ChartBar extends React.Component {
   constructor(props) {
@@ -139,16 +137,4 @@ class ChartBar extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    // poll: state.pollReducer
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    // findPoll: key => dispatch(findPoll(key))
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ChartBar)
+export default ChartBar

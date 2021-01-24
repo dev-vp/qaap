@@ -4,6 +4,9 @@ import * as d3 from 'd3'
 class ChartPie extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      options: this.props.poll.options
+    }
     this.renderPieChart = this.renderPieChart.bind(this)
   }
 
@@ -18,7 +21,10 @@ class ChartPie extends React.Component {
   renderPieChart() {
     const node = this.node
 
-    let data = [2, 4, 8, 10]
+    let data = this.state.options
+    let votes = this.state.options.map(opt => opt.vote.vote)
+    let options = this.state.options.map(opt => opt.option)
+    console.log('pie', data)
     let color = d3.scaleOrdinal([
       '#4daf4a',
       '#377eb8',
@@ -27,8 +33,8 @@ class ChartPie extends React.Component {
       '#e41a1c'
     ])
 
-    const height = 200
-    const width = 300
+    const height = 600
+    const width = 500
     const radius = Math.min(width, height) / 2
     // The radius is calculated as `Math.min(width, height) / 2` to ensure that our generated pie will fit into the bounds of the SVG. Therefore, we choose whichever of the width and height is the minimum value.
 
@@ -49,7 +55,7 @@ class ChartPie extends React.Component {
     //Generate GROUPS (for each data value/element)
     let arcs = g
       .selectAll('arc')
-      .data(pie(data))
+      .data(pie(votes))
       .enter()
       .append('g')
       .attr('class', 'arc')
@@ -72,15 +78,17 @@ class ChartPie extends React.Component {
     //TEXT LABELS
     arcs
       .append('text')
-      .data(pie(data))
+      .data(pie(votes))
       .attr('color', 'black')
       .attr('font-size', '20px')
       .attr('text-anchor', 'middle')
       .attr('transform', (d, i) => {
+        console.log(d)
         return `translate(${arc.centroid(d)})`
       })
       .text((d, i) => {
-        return d.data
+        console.log(d)
+        return `${d.data}`
       })
   }
 
