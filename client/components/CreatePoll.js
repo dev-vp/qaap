@@ -1,7 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {saveCreatedPoll} from '../redux/poll'
-import {history} from '../history'
 
 class CreatePoll extends React.Component {
   constructor() {
@@ -31,8 +30,24 @@ class CreatePoll extends React.Component {
 
   onSubmit(evt) {
     evt.preventDefault()
-    this.props.createPoll(this.state)
-    this.props.history.push('/visualpoll')
+    const postObject = {
+      pollSession: this.state.pollSession,
+      poll: {
+        title: this.state.title,
+        chartType: this.state.chartType,
+        question: this.state.question
+      },
+      options: [
+        {option: this.state.option1},
+        {option: this.state.option2},
+        {option: this.state.option3},
+        {option: this.state.option4},
+        {option: this.state.option5}
+      ]
+    }
+
+    this.props.createPoll(postObject)
+    this.props.history.push(`/visualpoll/${this.state.pollSession}`)
   }
 
   addMoreOptions() {

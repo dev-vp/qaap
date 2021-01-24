@@ -41,11 +41,7 @@ router.post('/', async function(req, res, next) {
 
   try {
     let newSession = await SessionKey.create({sessionKey: pollSession})
-    let newPoll = await Poll.create({
-      title: 'test',
-      chartType: 'bar',
-      question: 'What is this testing for?'
-    })
+    let newPoll = await Poll.create(poll)
     await newPoll.setSessionkey(newSession.id)
     for (let i = 0; i < options.length; i++) {
       const newOpt = await Option.create(options[i])
