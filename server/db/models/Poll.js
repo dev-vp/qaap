@@ -17,56 +17,6 @@ const Poll = db.define('poll', {
     type: Sequelize.STRING,
     allowNull: false,
     defaultValue: null
-  },
-  option1: {
-    type: Sequelize.STRING,
-    allowNull: true,
-    defaultValue: null
-  },
-  vote1: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    defaultValue: 0
-  },
-  option2: {
-    type: Sequelize.STRING,
-    allowNull: true,
-    defaultValue: null
-  },
-  vote2: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    defaultValue: 0
-  },
-  option3: {
-    type: Sequelize.STRING,
-    allowNull: true,
-    defaultValue: null
-  },
-  vote3: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    defaultValue: 0
-  },
-  option4: {
-    type: Sequelize.STRING,
-    allowNull: true,
-    defaultValue: null
-  },
-  vote4: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    defaultValue: 0
-  },
-  option5: {
-    type: Sequelize.STRING,
-    allowNull: true,
-    defaultValue: null
-  },
-  vote5: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    defaultValue: 0
   }
 })
 

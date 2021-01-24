@@ -1,33 +1,68 @@
-const {Poll, PollSession} = require('../db')
+const {Poll, Option, SessionKey, Vote} = require('../db')
 const router = require('express').Router()
 
 // GET requests to /api/session/:sessionKey/
 router.get('/:sessionKey', async function(req, res, next) {
   try {
-    const session = await PollSession.findAll({
+    const session = await SessionKey.findOne({
       raw: true,
       where: {
-        sessionId: req.params.sessionKey
+        sessionKey: req.params.sessionKey
       }
     })
 
-    const data = await Poll.findAll({
+    const poll = await Poll.findAll({
       where: {
-        pollSessionId: session[0].id
+        id: session.pollId
       },
       include: {
-        model: PollSession,
+        model: Option,
         where: {
-          sessionId: req.params.sessionKey
+          pollId: session.pollId
+        },
+        include: {
+          model: Vote,
+          where: {
+            pollId: session.pollId
+          }
         }
       }
     })
-    res.json(data)
+
+    res.json(poll)
   } catch (error) {
     next(error)
   }
 })
 
+// POST requests to /api/session/
+router.post('/', async function(req, res, next) {
+  const {pollSession, poll, options} = req.body
+
+  try {
+    let newSession = await SessionKey.create({sessionKey: pollSession})
+    let newPoll = await Poll.create({
+      title: 'test',
+      chartType: 'bar',
+      question: 'What is this testing for?'
+    })
+    await newPoll.setSessionkey(newSession.id)
+    for (let i = 0; i < options.length; i++) {
+      const newOpt = await Option.create(options[i])
+      await newOpt.setPoll(newPoll.id)
+      const newVote = await Vote.create()
+      await newOpt.setVote(newVote.id)
+      await newVote.setPoll(newPoll.id)
+    }
+
+    res.sendStatus(200)
+  } catch (error) {
+    next(error)
+  }
+})
+
+/* BELOW ARE UNECESSARY ROUTES FOR THE TIME BEING */
+/*
 // PUT requests to /api/session/:sessionKey/
 router.put('/:sessionKey', async function(req, res, next) {
   try {
@@ -53,96 +88,41 @@ router.put('/:sessionKey', async function(req, res, next) {
 // DELETE requests to /api/session/:sessionKey/
 router.delete('/:sessionKey', async function(req, res, next) {
   try {
-    let currentSession = await PollSession.findOne({
-      where: {
-        sessionId: req.params.sessionKey
+    const targetSession = await SessionKey.findOne({
+      where:{
+        sessionKey: req.params.sessionKey,
       }
     })
 
-    let targetPoll = await Poll.findOne({
+    await Option.destroy({
       where: {
-        pollSessionId: currentSession.id
-      }
+        pollId: targetSession.pollId
+      },
     })
 
-    await currentSession.destroy()
-    await targetPoll.destroy()
+    // await Vote.destory({
+    //   where: {
+    //     pollId: targetSession.pollId
+    //   }
+    // })
+
+    await Poll.destroy({
+      where: {
+        id: targetSession.pollId
+      },
+    })
+
+    await SessionKey.destroy({
+      where: {
+        sessionKey: req.params.sessionKey
+      }
+    })
 
     res.sendStatus(200)
   } catch (error) {
     next(error)
   }
 })
-
-// POST requests to /api/session/
-router.post('/', async function(req, res, next) {
-  const {pollSession} = req.body
-  const {
-    title,
-    chartType,
-    question,
-    option1,
-    vote1,
-    option2,
-    vote2,
-    option3,
-    vote3,
-    option4,
-    vote4,
-    option5,
-    vote5
-  } = req.body
-  try {
-    let newSession = await PollSession.create({sessionId: pollSession})
-
-    const pollData = {
-      title,
-      chartType,
-      question,
-      option1,
-      vote1,
-      option2,
-      vote2,
-      option3,
-      vote3,
-      option4,
-      vote4,
-      option5,
-      vote5,
-      pollSessionId: newSession.id
-    }
-
-    let newPoll = await Poll.create(pollData)
-
-    // await Poll.prototype.setPollSession(newSession)
-    res.sendStatus(200)
-  } catch (error) {
-    next(error)
-  }
-})
+*/
 
 module.exports = router
-
-/* CORRECT JSON Data Structure for PUT Request ('/api/session'): Tested/Confirmed with POSTMAN
-** REACT Component State Should be in the same format as below.
------------------------------------------------------------------
-{
-  "title": "test poll",
-  "chartType": "bar",
-  "question": "Test",
-  "option1": "option1",
-  "vote1": 0,
-  "option2": "option2",
-  "vote2": 8,
-  "option3": "option3",
-  "vote3": 5,
-  "option4": null,
-  "vote4": 0,
-  "option5": null,
-  "vote5": 0,
-  "pollSession": {
-      "id": 1,
-      "sessionId": "202107291830"
-  }
-}
-*/
