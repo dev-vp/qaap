@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React from 'react'
 import * as d3 from 'd3'
 
@@ -50,15 +51,16 @@ class ChartPie extends React.Component {
       .attr('transform', `translate(${width / 2}, ${height / 2})`)
 
     //Generate the PIE
-    let pie = d3.pie() //This will generate pies values (i.e. startAngle, endAngle)
+    let pie = d3.pie().sort(null) //This will generate pies values (i.e. startAngle, endAngle)
 
     //Generate GROUPS (for each data value/element)
     let arcs = g
-      .selectAll('arc')
+      .selectAll('pie-wedge')
       .data(pie(votes))
       .enter()
       .append('g')
-      .attr('class', 'arc')
+      .attr('class', 'pie-wedge')
+      .attr('id', (d, i) => `wedge${i}`)
 
     // Generate the ARC
     // (used for drawing paths for each pie wedge)
@@ -68,27 +70,44 @@ class ChartPie extends React.Component {
       .outerRadius(radius)
 
     //Draw ARC PATHs
-    arcs
+    let arcPath = arcs
       .append('path')
       .attr('fill', (d, i) => {
         return color(i)
       })
       .attr('d', arc)
 
-    //TEXT LABELS
+    //VOTE COUNT LABELS
     arcs
       .append('text')
       .data(pie(votes))
       .attr('color', 'black')
       .attr('font-size', '20px')
-      .attr('text-anchor', 'middle')
+      .attr('font-weight', 'light')
+      .attr('text-anchor', 'start')
       .attr('transform', (d, i) => {
-        console.log(d)
         return `translate(${arc.centroid(d)})`
       })
       .text((d, i) => {
+        if (d.data !== 0) {
+          return `${d.data}`
+        }
+      })
+
+    //TEXT LABEL
+    arcs
+      .append('text')
+      .data(options)
+      .attr('font-size', '20px')
+      .attr('font-weight', 'bolder')
+      .attr('text-anchor', 'end')
+      .text((d, i) => {
         console.log(d)
-        return `${d.data}`
+        return `${d}: `
+      })
+      .data(pie(votes))
+      .attr('transform', (d, i) => {
+        return `translate(${arc.centroid(d)})`
       })
   }
 

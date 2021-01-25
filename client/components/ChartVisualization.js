@@ -82,6 +82,7 @@ class ChartVisualization extends React.Component {
             Pie Chart
           </button>
         </div>
+        <div id="pie-label" />
         <div>
           {this.state.pollType === 'bar' && this.state.fetched ? (
             <ChartBar poll={this.state.poll} skey={this.state.key} />

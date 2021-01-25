@@ -25,6 +25,14 @@ class ChartBar extends React.Component {
     let height = 500
     let margin = 200
 
+    let color = d3.scaleOrdinal([
+      '#4daf4a',
+      '#377eb8',
+      '#ff7f00',
+      '#984ea3',
+      '#e41a1c'
+    ])
+
     d3.select('.bar-svg').remove()
 
     let svg = d3
@@ -62,32 +70,25 @@ class ChartBar extends React.Component {
       .attr('transform', `translate(0, ${height})`)
       .call(d3.axisBottom(xScale))
 
-    g
-      .append('g')
-      .call(
-        d3
-          .axisLeft(yScale)
-          .tickFormat(d => {
-            return `${d}`
-          })
-          .ticks(10)
-      )
-      .append('text')
-      .attr('y', 6)
-      .attr('dy', '0.71em')
-      .attr('text-anchor', 'end')
-      .attr('fill', 'black')
-      .attr('font-family', 'arial')
-      .attr('font-size', 20)
-      .text('Votes')
+    g.append('g').call(
+      d3
+        .axisLeft(yScale)
+        .tickFormat(d => {
+          return `${d}`
+        })
+        .ticks(10)
+    )
 
     g
       .selectAll('bar')
+      .sort(null)
       .data(data)
       .enter()
       .append('rect')
       .attr('class', 'bar')
-      .attr('fill', 'steelblue')
+      .attr('fill', (d, i) => {
+        return color(i)
+      })
       .attr('x', d => {
         return xScale(d.option)
       })
@@ -98,19 +99,6 @@ class ChartBar extends React.Component {
       .attr('height', d => {
         return height - yScale(d.vote.vote)
       })
-
-    g
-      .append('g')
-      .attr('transform', `translate(0, ${height})`)
-      .call(d3.axisBottom(xScale))
-      .append('text')
-      .attr('x', width / 2)
-      .attr('y', height - 460)
-      .attr('text-anchor', 'end')
-      .attr('stroke', 'black')
-      .attr('font-family', 'arial')
-      .attr('font-size', '20px')
-      .text('Options')
 
     const barNode = document.querySelectorAll('.bar')
 
