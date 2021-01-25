@@ -4,8 +4,8 @@ import {Link} from 'react-router-dom'
 class ConfirmPage extends React.Component {
   render() {
     return (
-      <div>
-        <h3>Your Poll has been created!</h3>
+      <div id="confirm-wrapper">
+        <h2>Your Poll has been created!</h2>
         <p>
           Creator Key: <span>{this.props.match.params.key}</span>
         </p>

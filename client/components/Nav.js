@@ -8,10 +8,10 @@ class Nav extends React.Component {
         <Link to="/">
           <h1 id="logo">Q+AP</h1>
         </Link>
-        <span>Interactive Polling</span>
+        <p>Interactive Polling</p>
         <div id="nav">
-          <a href="#">Export Data</a>
-          <a href="#">Close Session</a>
+          {/* <a href="#">Export Data</a>
+          <a href="#">Close Session</a> */}
         </div>
       </div>
     )

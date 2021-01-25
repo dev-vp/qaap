@@ -6,9 +6,15 @@ class Home extends React.Component {
   render() {
     return (
       <div id="home-wrapper">
-        <h1>Q+A Polling</h1>
+        <p>
+          Q+AP Interative Polling provides you with simple and intuitive
+          solutions for audience engagement by leveraging real-time surveying
+          capabilities. If you're just starting out, please create your poll by
+          filling out the fields below. Upon finishing, you will receive a
+          unique identification key for your poll. If you're a participant,
+          please enter your key below to start voting.
+        </p>
         <AccessPoll history={this.props.history} />
-        <hr /> {/****** REMOVE THIS WHEN STYLING ******/}
         <CreatePoll history={this.props.history} />
       </div>
     )

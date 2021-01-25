@@ -1,56 +1,356 @@
 /* ------------------------------------------- */
 /* ------------- GLOBAL LAYOUT --------------- */
 /* ------------------------------------------- */
+body {
+  padding-top: 50px;
+  padding-bottom: 88px;
+  margin-left: 0px;
+  margin-right: 0px;
+}
 
+/* ------------------------------------------- */
+/* ---------------- NAV LAYOUT --------------- */
+/* ------------------------------------------- */
 #header {
-  height: 88px;
-  border-bottom: 3px solid gray;
-  box-shadow: 0px 5px 8px rgb(92, 91, 91);
+  height: 50px;
+  box-shadow: 0px 2px 8px rgb(92, 91, 91);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  background-color: rgb(255, 255, 255);
+  text-align: center;
 }
 
 #logo {
   font-family: Impact;
-  font-size: 68px;
-  margin-top: 0;
-  margin-left: 1%;
+  font-size: 28px;
+  margin: 0;
   display: inline-block;
 }
 
-#nav {
-  float: right;
+#header > a {
+  color: steelblue;
+  border-bottom: 1px solid rgb(68, 68, 68);
+  padding: 1px 18px;
 }
 
-#nav > * {
+#header > p {
+  margin: 0;
+  font-family: helvetica;
+  /* font-weight: lighter; */
+  font-size: 10px;
+  color: steelblue;
+}
+
+/* #nav {
+  float: right;
+} */
+
+/* #nav > * {
   color: rgb(99, 99, 99);
   font-family: sans-serif;
   font-size: 12px;
   margin-right: 18px;
+} */
+
+/* ------------------------------------------- */
+/* --------------- HOME LAYOUT --------------- */
+/* ------------------------------------------- */
+#home-wrapper > p {
+  margin-top: 8px;
+  font-family: helvetica;
+  font-weight: lighter;
+  font-size: 12px;
+  padding: 0px 28px;
+  letter-spacing: 1px;
+}
+
+/* ------------------------------------------- */
+/* ---------- ACCESS POLL LAYOUT ------------- */
+/* ------------------------------------------- */
+#access-poll-wrapper {
+  width: 100vw;
+  text-align: center;
+  box-shadow: 0px 2px 2px rgb(190, 190, 190);
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+
+#access-poll-form > input {
+  padding: 3px 8px;
+  border-radius: 12px;
+  outline: none;
+  border: 1px solid gray;
+}
+
+#access-poll-form > input:hover {
+  border: 2px solid gray;
+}
+
+#access-poll-form > button {
+  margin: 0px 12px;
+  padding: 3px 8px;
+  border-radius: 12px;
+  outline: none;
+  border: 2px solid gray;
+  color: gray;
+  font-weight: bold;
+  background-color: transparent;
+  box-shadow: 2px 2px 2px lightgrey;
+}
+
+#access-poll-form > button:hover {
+  border: 2px solid steelblue;
+  color: steelblue;
+}
+
+#access-poll-form > button:active {
+  border: 2px solid rgb(0, 132, 255);
+  color: rgb(0, 132, 255);
+  box-shadow: none;
 }
 
 /* ------------------------------------------- */
 /* ----------- CREATEFORM.JS LAYOUT ---------- */
 /* ------------------------------------------- */
+#create-form-wrapper {
+  text-align: center;
+}
+
+#create-form {
+  padding-top: 10px;
+  padding-bottom: 39px;
+  width: 70%;
+  margin: 0 auto;
+  box-shadow: 2px 5px 8px lightgrey;
+  margin-top: 20px;
+}
+
 label {
   font-family: sans-serif;
   display: block;
   margin-top: 12px;
   margin-bottom: 2px;
-  font-weight: bold;
+  font-size: 12px;
+  font-weight: bolder;
+  color: steelblue;
+  outline: none;
+}
+
+select {
+  height: 30px;
+  width: 39%;
+  border-radius: 12px;
+  border: 1px solid gray;
+  outline: none;
+  color: lightgrey;
 }
 
 input {
   width: 38%;
+  border-radius: 12px;
+  border: 1px solid gray;
+  padding: 5px 8px;
+}
+
+input::placeholder {
+  color: lightgrey;
 }
 
 button {
   margin-top: 18px;
 }
 
-select {
-  height: 26px;
-  width: 188px;
+#option-container {
+  margin-top: 30px;
+  margin-bottom: 20px;
+  /* border: 2px solid lightgrey; */
+  padding-top: 12px;
+  padding-bottom: 30px;
+}
+
+#option-container > p {
+  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(255, 255, 255);
+  text-shadow: 2px 2px lightgrey;
+  font-weight: bold;
+  font-size: 18px;
+  margin-top: 0px;
 }
 
 .option-hide {
   display: none;
+}
+
+/* FORM BUTTONS */
+#add-option {
+  margin: 0px 12px;
+  padding: 3px 8px;
+  border-radius: 12px;
+  outline: none;
+  border: 2px solid rgba(0, 128, 0, 0.5);
+  color: rgba(0, 128, 0, 0.5);
+  font-weight: bold;
+  background-color: transparent;
+  box-shadow: 2px 2px 2px lightgrey;
+}
+
+#add-option:hover {
+  border: 2px solid green;
+  color: green;
+}
+
+#add-option:active {
+  border: 2px solid darkgreen;
+  color: darkgreen;
+  box-shadow: none;
+}
+
+#create-button {
+  margin: 0px 12px;
+  padding: 3px 8px;
+  border-radius: 12px;
+  outline: none;
+  border: 2px solid steelblue;
+  color: steelblue;
+  font-weight: bold;
+  background-color: transparent;
+  box-shadow: 2px 2px 2px lightgrey;
+}
+
+#create-button:hover {
+  border: 2px solid rgb(38, 93, 138);
+  color: rgb(38, 93, 138);
+}
+
+#create-button:active {
+  border: 2px solid rgb(12, 63, 105);
+  color: rgb(12, 63, 105);
+  box-shadow: none;
+}
+
+/* ------------------------------------------- */
+/* ------------- VOTE FORM LAYOUT ------------ */
+/* ------------------------------------------- */
+#vote-form {
+  text-align: center;
+}
+
+#vote-form > h3 {
+  font-family: Helvetica;
+}
+
+#vote-form > h1 {
+  font-family: Helvetica;
+  font-weight: lighter;
+  text-shadow: 3px 3px 5px gray;
+}
+
+.vote-button > button {
+  width: 65vw;
+  height: 10vh;
+  color: white;
+  border-radius: 8px;
+  border: none;
+  background-color: rgb(124, 177, 221);
+  outline: none;
+  font-size: 20px;
+  font-weight: bold;
+  box-shadow: 2px 2px black;
+}
+
+.vote-button > button:hover {
+  background-color: steelblue;
+}
+
+.vote-button > button:active {
+  background-color: steelblue;
+  box-shadow: none;
+}
+
+/* ------------------------------------------- */
+/* ------------ DATA VISUAL LAYOUT ----------- */
+/* ------------------------------------------- */
+#chart-visualization {
+  text-align: center;
+}
+
+#chart-visualization > * {
+  font-family: Helvetica;
+}
+
+#chart-visualization > h1 {
+  font-weight: lighter;
+  text-shadow: 3px 3px 5px gray;
+}
+
+#selection-wrapper {
+  margin-bottom: 38px;
+}
+
+#selection-wrapper > button {
+  margin: 0px 30px;
+  background-color: transparent;
+  border: 3px solid steelblue;
+  border-radius: 12px;
+  color: steelblue;
+  outline: none;
+  padding: 2px 20px;
+  box-shadow: 2px 2px 3px gray;
+}
+
+#selection-wrapper > button:hover {
+  border: 3px solid green;
+  color: green;
+}
+
+#selection-wrapper > button:active {
+  border: 2px solid black;
+  color: black;
+  box-shadow: none;
+}
+
+/* ------------------------------------------- */
+/* ----------- CONFIRM PAGE LAYOUT ----------- */
+/* ------------------------------------------- */
+#confirm-wrapper {
+  text-align: center;
+  font-family: Helvetica;
+  padding-top: 30px;
+}
+
+#confirm-wrapper > h2 {
+  text-shadow: 3px 3px 3px lightgrey;
+  color: steelblue;
+  margin-bottom: 25px;
+}
+
+#confirm-wrapper > p {
+  font-weight: bold;
+}
+
+#confirm-wrapper > p > span {
+  font-weight: normal;
+  color: rgb(100, 100, 100);
+}
+
+#confirm-wrapper > a {
+  border: 3px solid green;
+  border-radius: 8px;
+  padding: 3px 18px;
+  color: green;
+  font-weight: bold;
+  display: inline-block;
+  margin-top: 30px;
+  box-shadow: 2px 2px 3px gray;
+}
+
+#confirm-wrapper > a:hover {
+  border: 3px solid steelblue;
+  color: steelblue;
+}
+
+#confirm-wrapper > a:active {
+  box-shadow: none;
 }
