@@ -1,13 +1,17 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {ChartBar, ChartPie} from './index'
-import {findPoll} from '../redux/poll'
+import {findPoll, submitVote} from '../redux/poll'
+import socket from '../socket'
 
 class ChartVisualization extends React.Component {
   constructor() {
     super()
     this.state = {
-      pollType: 'bar'
+      pollType: 'bar',
+      key: '',
+      poll: {},
+      fetched: false
     }
   }
 
@@ -15,9 +19,30 @@ class ChartVisualization extends React.Component {
     await this.props.findPoll(this.props.match.params.key)
     this.setState({
       key: this.props.match.params.key,
-      poll: this.props.poll[0]
+      poll: this.props.poll[0],
+      fetched: true
+    })
+
+    socket.on(`${this.state.key}`, message => {
+      console.log('Message Received in FrontEnd')
+
+      let newPollState = this.state.poll
+
+      for (let i = 0; i < newPollState.options.length; i++) {
+        if (newPollState.options[i].vote.id === Number(message.voteId)) {
+          newPollState.options[i].vote.vote++
+          this.setState({
+            poll: newPollState
+          })
+          this.props.submitVote(Number(message.voteId))
+        }
+      }
     })
   }
+
+  // componentDidUpdate() {
+  //   console.log('CHARTVISUAL - componentDidUpdate', this.props)
+  // }
 
   clickHandler = evt => {
     evt.preventDefault()
@@ -29,9 +54,14 @@ class ChartVisualization extends React.Component {
   render() {
     return (
       <div id="chart-visualization">
-        <h1 id="poll-title">
+        <h3 id="poll-title">
           {this.state.poll
             ? `${this.state.poll.title}`.toUpperCase()
+            : 'Loading'}
+        </h3>
+        <h1 id="poll-question">
+          {this.state.poll
+            ? `${this.state.poll.question}`.toUpperCase()
             : 'Loading'}
         </h1>
         <div id="selection-wrapper">
@@ -53,10 +83,15 @@ class ChartVisualization extends React.Component {
           </button>
         </div>
         <div>
-          {this.state.pollType === 'bar' ? (
-            <ChartBar poll={this.state.poll} />
+          {this.state.pollType === 'bar' && this.state.fetched ? (
+            <ChartBar poll={this.state.poll} skey={this.state.key} />
           ) : (
-            <ChartPie poll={this.state.poll} />
+            <h1 />
+          )}
+          {this.state.pollType === 'pie' && this.state.fetched ? (
+            <ChartPie poll={this.state.poll} skey={this.state.key} />
+          ) : (
+            <h1 />
           )}
         </div>
       </div>
@@ -71,7 +106,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    findPoll: key => dispatch(findPoll(key))
+    findPoll: key => dispatch(findPoll(key)),
+    submitVote: voteKey => dispatch(submitVote(voteKey))
   }
 }
 

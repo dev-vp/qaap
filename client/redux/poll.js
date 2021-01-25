@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const CREATE_POLL = 'CREATE_POLL'
 const ACCESS_POLL = 'ACCESS_POLL'
-const FETCH_POLL = 'FETCH_POLL'
+const VOTE = 'VOTE'
 
 function createPoll(newPoll) {
   return {
@@ -15,6 +15,13 @@ function accessPoll(poll) {
   return {
     type: ACCESS_POLL,
     poll
+  }
+}
+
+function votePoll(vote) {
+  return {
+    type: VOTE,
+    vote
   }
 }
 
@@ -31,13 +38,22 @@ export function saveCreatedPoll(newPoll) {
 
 export function findPoll(key) {
   //HASH THE KEY HERE
-  //let key=
-  //if(user !== 'creator'){key=...} else {key=...}
   let sessionKey = key
   return async dispatch => {
     try {
       const response = await axios.get(`/api/session/${sessionKey}`)
       dispatch(accessPoll(response.data))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
+
+export function submitVote(voteId) {
+  return async dispatch => {
+    try {
+      await axios.put(`/api/session/${voteId}`)
+      // dispatch(votePoll())
     } catch (error) {
       console.error(error)
     }

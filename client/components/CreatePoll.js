@@ -47,7 +47,7 @@ class CreatePoll extends React.Component {
     }
 
     this.props.createPoll(postObject)
-    this.props.history.push(`/visualpoll/${this.state.pollSession}`)
+    this.props.history.push(`/confirm/${this.state.pollSession}`)
   }
 
   addMoreOptions() {

@@ -4,6 +4,9 @@ import * as d3 from 'd3'
 class ChartBar extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      options: this.props.poll.options
+    }
     this.renderBarChart = this.renderBarChart.bind(this)
   }
 
@@ -22,53 +25,41 @@ class ChartBar extends React.Component {
     let height = 500
     let margin = 200
 
+    d3.select('.bar-svg').remove()
+
     let svg = d3
       .select(node)
-      // .append('svg')
-      .attr('width', width + margin) //margin is accounted for because...
-      .attr('height', height + margin) //...the height variable is also used elsewhere
-    // .on('click', () => {console.log(d3.event)})
+      .append('svg')
+      .attr('class', 'bar-svg')
+      .attr('width', width + margin)
+      .attr('height', height + margin)
 
-    let data = [
-      {year: 2011, value: 45},
-      {year: 2012, value: 47},
-      {year: 2013, value: 52},
-      {year: 2014, value: 70},
-      {year: 2015, value: 75},
-      {year: 2016, value: 78}
-    ]
-
-    /* ORIGINALLY - X and Y Scale were predefined here (outside the d3.csv()) */
-    //
-    // // `d3.scaleBand()` computes the scale by dividing the range into uniform bands.
-    // // `.padding()` is the space between each tick mark and bar
-    // let xScale = d3.scaleBand().range([0, width]).padding(0.4) //year (x) axis & padding is the space between ticks
-    // let yScale = d3.scaleLinear().range([height, 0]) //stock price values (y) axis
+    let data = this.state.options
 
     let g = svg.append('g').attr('transform', `translate(100, 0)`)
 
     let xScale = d3
-      .scaleBand() //computes the scale by dividing the range into uniform bands.
+      .scaleBand()
       .domain(
         data.map(d => {
-          return d.year
+          return d.option
         })
-      ) // array of years being passed in
+      )
       .range([0, width])
-      .padding(0.4) //padding between ticks and the bars
+      .padding(0.4)
     let yScale = d3
       .scaleLinear()
       .domain([
         0,
         d3.max(data, d => {
-          return d.value
+          return d.vote.vote
         })
       ])
-      .range([height, 0]) //stock price values (y) axis
+      .range([height, 0])
 
     g
       .append('g')
-      .attr('transform', `translate(0, ${height})`) // x,y axis position (top-left of svg)
+      .attr('transform', `translate(0, ${height})`)
       .call(d3.axisBottom(xScale))
 
     g
@@ -77,37 +68,36 @@ class ChartBar extends React.Component {
         d3
           .axisLeft(yScale)
           .tickFormat(d => {
-            return `$${d}`
-          }) // Prefix our tick label with the dollar-sign ($)
-          .ticks(10) // # of ticks to show
+            return `${d}`
+          })
+          .ticks(10)
       )
       .append('text')
       .attr('y', 6)
       .attr('dy', '0.71em')
       .attr('text-anchor', 'end')
       .attr('fill', 'black')
-      .attr('font-size', 18) // .attr() or .style() works for font-size
-      .text('value')
+      .attr('font-family', 'arial')
+      .attr('font-size', 20)
+      .text('Votes')
 
     g
       .selectAll('bar')
       .data(data)
       .enter()
       .append('rect')
-      .attr('class', 'bar') //add class="bar" attribute
-      .attr('fill', 'steelblue') //fill color
-      // Below, we are passing each data value (year & value) into each of the scale we created earlier (outside the domain). Based on the 'data'(value) we pass in to 'scale()', it is auto-scaled accordingly to the 'range' we set. If the value passed in that is outside the predefined 'range', 'clamping' configuration will be required...
+      .attr('class', 'bar')
+      .attr('fill', 'steelblue')
       .attr('x', d => {
-        return xScale(d.year)
-      }) // position of the bar on the x-axis
-      .attr('y', d => {
-        return yScale(d.value)
-      }) // starting position of the bar on the y-axis
-      .attr('width', xScale.bandwidth()) // returns the width of each band
-      .attr('height', d => {
-        return height - yScale(d.value)
+        return xScale(d.option)
       })
-    // ^^ height of the SVG minus the corresponding y-value of the bar from the y-scale. Remember that the y-value here would be the tip of the bar since it is calculated from the origin and origin is at (0,0).
+      .attr('y', d => {
+        return yScale(d.vote.vote)
+      })
+      .attr('width', xScale.bandwidth())
+      .attr('height', d => {
+        return height - yScale(d.vote.vote)
+      })
 
     g
       .append('g')
@@ -118,19 +108,31 @@ class ChartBar extends React.Component {
       .attr('y', height - 460)
       .attr('text-anchor', 'end')
       .attr('stroke', 'black')
-      .text('Year')
+      .attr('font-family', 'arial')
+      .attr('font-size', '20px')
+      .text('Options')
 
-    svg
-      .append('text')
-      .attr('transform', 'translate(100,0)')
-      .attr('x', 50)
-      .attr('y', 50)
-      .attr('font-size', '24px')
-      .text('XYZ Stock Prices')
+    const barNode = document.querySelectorAll('.bar')
+
+    console.log('barNode', barNode[0].attributes.y.value)
+    for (let i = 0; i < barNode.length; i++) {
+      if (Number(barNode[i].attributes.y.value) === 250) {
+        barNode[i].style.display = 'none'
+      } else {
+        barNode[i].style.display = ''
+      }
+    }
   }
 
   render() {
-    return <svg ref={node => (this.node = node)} width={800} height={800} />
+    return (
+      <div
+        className="bar-chart"
+        ref={node => (this.node = node)}
+        width={800}
+        height={800}
+      />
+    )
   }
 }
 

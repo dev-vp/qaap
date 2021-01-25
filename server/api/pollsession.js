@@ -57,6 +57,24 @@ router.post('/', async function(req, res, next) {
   }
 })
 
+// PUT requests to /api/session/:voteId
+router.put('/:voteId', async function(req, res, next) {
+  try {
+    let targetVote = await Vote.findOne({
+      where: {
+        id: req.params.voteId
+      }
+    })
+
+    let newVoteCount = ++targetVote.vote
+
+    await targetVote.update({vote: newVoteCount})
+    res.sendStatus(200)
+  } catch (error) {
+    next(error)
+  }
+})
+
 /* BELOW ARE UNECESSARY ROUTES FOR THE TIME BEING */
 /*
 // PUT requests to /api/session/:sessionKey/
