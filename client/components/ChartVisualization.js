@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {ChartBar, ChartPie} from './index'
-import {findPoll} from '../redux/poll'
+import {findPoll, submitVote} from '../redux/poll'
 import socket from '../socket'
 
 class ChartVisualization extends React.Component {
@@ -22,7 +22,6 @@ class ChartVisualization extends React.Component {
       poll: this.props.poll[0],
       fetched: true
     })
-    console.log('CHARTVISUAL - componentDidMount', this.props)
 
     socket.on(`${this.state.key}`, message => {
       console.log('Message Received in FrontEnd')
@@ -32,19 +31,18 @@ class ChartVisualization extends React.Component {
       for (let i = 0; i < newPollState.options.length; i++) {
         if (newPollState.options[i].vote.id === Number(message.voteId)) {
           newPollState.options[i].vote.vote++
-          console.log('before', this.state.poll.options[i])
           this.setState({
             poll: newPollState
           })
-          console.log('after', this.state.poll.options[i])
+          this.props.submitVote(Number(message.voteId))
         }
       }
     })
   }
 
-  componentDidUpdate() {
-    console.log('CHARTVISUAL - componentDidUpdate', this.props)
-  }
+  // componentDidUpdate() {
+  //   console.log('CHARTVISUAL - componentDidUpdate', this.props)
+  // }
 
   clickHandler = evt => {
     evt.preventDefault()
@@ -56,9 +54,14 @@ class ChartVisualization extends React.Component {
   render() {
     return (
       <div id="chart-visualization">
-        <h1 id="poll-title">
+        <h3 id="poll-title">
           {this.state.poll
             ? `${this.state.poll.title}`.toUpperCase()
+            : 'Loading'}
+        </h3>
+        <h1 id="poll-question">
+          {this.state.poll
+            ? `${this.state.poll.question}`.toUpperCase()
             : 'Loading'}
         </h1>
         <div id="selection-wrapper">
@@ -103,7 +106,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    findPoll: key => dispatch(findPoll(key))
+    findPoll: key => dispatch(findPoll(key)),
+    submitVote: voteKey => dispatch(submitVote(voteKey))
   }
 }
 
