@@ -102,11 +102,15 @@ class ChartBar extends React.Component {
 
     const barNode = document.querySelectorAll('.bar')
 
-    console.log('barNode', barNode[0].attributes.y.value)
+    let initialized = false
     for (let i = 0; i < barNode.length; i++) {
+      if (initialized) {
+        break
+      }
       if (Number(barNode[i].attributes.y.value) === 250) {
         barNode[i].style.display = 'none'
       } else {
+        initialized = true
         barNode[i].style.display = ''
       }
     }
