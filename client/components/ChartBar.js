@@ -111,6 +111,17 @@ class ChartBar extends React.Component {
       .attr('font-family', 'arial')
       .attr('font-size', '20px')
       .text('Options')
+
+    const barNode = document.querySelectorAll('.bar')
+
+    console.log('barNode', barNode[0].attributes.y.value)
+    for (let i = 0; i < barNode.length; i++) {
+      if (Number(barNode[i].attributes.y.value) === 250) {
+        barNode[i].style.display = 'none'
+      } else {
+        barNode[i].style.display = ''
+      }
+    }
   }
 
   render() {
