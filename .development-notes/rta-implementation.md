@@ -22,7 +22,7 @@ Instead of using 'notify/listen'
 ## Communication Flow
 
 1.  Participant Vote is Submitted
-2.  Redirect Participant to a 'Thank You for Voting' page
+2.  Redirect Participant to a 'Thank You for Voting' page (\* Ignored for ease of testing voting functionality)
 3.  Send Vote over `socket` connection
 4.  Presenter receives votes over `socket` connection
 5.  Vote is stored in redux / component state
