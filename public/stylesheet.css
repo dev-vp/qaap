@@ -3,6 +3,7 @@
 /* ------------------------------------------- */
 body {
   padding-top: 50px;
+  padding-bottom: 88px;
   margin-left: 0px;
   margin-right: 0px;
 }
@@ -113,27 +114,118 @@ body {
 /* ------------------------------------------- */
 /* ----------- CREATEFORM.JS LAYOUT ---------- */
 /* ------------------------------------------- */
+#create-form-wrapper {
+  text-align: center;
+}
+
+#create-form {
+  padding-top: 10px;
+  padding-bottom: 39px;
+  width: 70%;
+  margin: 0 auto;
+  box-shadow: 2px 5px 8px lightgrey;
+  margin-top: 20px;
+}
+
 label {
   font-family: sans-serif;
   display: block;
   margin-top: 12px;
   margin-bottom: 2px;
-  font-weight: bold;
+  font-size: 12px;
+  font-weight: bolder;
+  color: steelblue;
+  outline: none;
+}
+
+select {
+  height: 30px;
+  width: 39%;
+  border-radius: 12px;
+  border: 1px solid gray;
+  outline: none;
+  color: lightgrey;
 }
 
 input {
   width: 38%;
+  border-radius: 12px;
+  border: 1px solid gray;
+  padding: 5px 8px;
+}
+
+input::placeholder {
+  color: lightgrey;
 }
 
 button {
   margin-top: 18px;
 }
 
-select {
-  height: 26px;
-  width: 188px;
+#option-container {
+  margin-top: 30px;
+  margin-bottom: 20px;
+  /* border: 2px solid lightgrey; */
+  padding-top: 12px;
+  padding-bottom: 30px;
+}
+
+#option-container > p {
+  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(255, 255, 255);
+  text-shadow: 2px 2px lightgrey;
+  font-weight: bold;
+  font-size: 18px;
+  margin-top: 0px;
 }
 
 .option-hide {
   display: none;
+}
+
+/* FORM BUTTONS */
+#add-option {
+  margin: 0px 12px;
+  padding: 3px 8px;
+  border-radius: 12px;
+  outline: none;
+  border: 2px solid rgba(0, 128, 0, 0.5);
+  color: rgba(0, 128, 0, 0.5);
+  font-weight: bold;
+  background-color: transparent;
+  box-shadow: 2px 2px 2px lightgrey;
+}
+
+#add-option:hover {
+  border: 2px solid green;
+  color: green;
+}
+
+#add-option:active {
+  border: 2px solid darkgreen;
+  color: darkgreen;
+  box-shadow: none;
+}
+
+#create-button {
+  margin: 0px 12px;
+  padding: 3px 8px;
+  border-radius: 12px;
+  outline: none;
+  border: 2px solid steelblue;
+  color: steelblue;
+  font-weight: bold;
+  background-color: transparent;
+  box-shadow: 2px 2px 2px lightgrey;
+}
+
+#create-button:hover {
+  border: 2px solid rgb(38, 93, 138);
+  color: rgb(38, 93, 138);
+}
+
+#create-button:active {
+  border: 2px solid rgb(12, 63, 105);
+  color: rgb(12, 63, 105);
+  box-shadow: none;
 }

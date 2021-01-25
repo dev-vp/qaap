@@ -64,59 +64,77 @@ class CreatePoll extends React.Component {
     return (
       <div id="create-form-wrapper">
         <form id="create-form" onSubmit={evt => this.onSubmit(evt)}>
-          <label>Presentation Name:</label>
-          <input name="title" onChange={evt => this.onChange(evt)} />
+          <label>Name of your Presentation</label>
+          <input
+            name="title"
+            onChange={evt => this.onChange(evt)}
+            placeholder="i.e. Best Camera on the Market for Mirrorless"
+          />
 
-          <label>How would you like your data visualized?</label>
+          <label>Type of Data Visualization</label>
           <select name="chartType" onChange={evt => this.onChange(evt)}>
             <option value="bar"> (Select an Option) </option>
             <option value="bar"> Bar Graph </option>
             <option value="pie"> Pie Chart </option>
           </select>
 
-          <label>Polling Question For Your Audience:</label>
+          <label>A Question For Your Audience</label>
           <span>
-            <input name="question" onChange={evt => this.onChange(evt)} />
+            <input
+              name="question"
+              onChange={evt => this.onChange(evt)}
+              placeholder="i.e. What is your camera of choice?"
+            />
           </span>
 
           <div id="option-container">
+            <p>VOTING OPTION(S)</p>
             <label className="option">Option #1:</label>
             <input
               className="option"
               name="option1"
               onChange={evt => this.onChange(evt)}
+              placeholder="i.e. Canon EOS R"
             />
             <label className="option">Option #2:</label>
             <input
               className="option"
               name="option2"
               onChange={evt => this.onChange(evt)}
+              placeholder="i.e. Nikon Z7"
             />
             <label className="option-hide">Option #3:</label>
             <input
               className="option-hide"
               name="option3"
               onChange={evt => this.onChange(evt)}
+              placeholder="i.e. Sony A7"
             />
             <label className="option-hide">Option #4:</label>
             <input
               className="option-hide"
               name="option4"
               onChange={evt => this.onChange(evt)}
+              placeholder="i.e. Mirrorless is not my style."
             />
             <label className="option-hide">Option #5:</label>
             <input
               className="option-hide"
               name="option5"
               onChange={evt => this.onChange(evt)}
+              placeholder="i.e. I like film cameras."
             />
           </div>
 
-          <button type="button" onClick={() => this.addMoreOptions()}>
+          <button
+            id="add-option"
+            type="button"
+            onClick={() => this.addMoreOptions()}
+          >
             Add More Options
           </button>
 
-          <button>Create My Poll!</button>
+          <button id="create-button">Create My Poll!</button>
         </form>
       </div>
     )
