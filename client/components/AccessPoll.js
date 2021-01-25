@@ -35,6 +35,9 @@ class AccessPoll extends React.Component {
             name="key"
             onChange={evt => this.handleChange(evt)}
             placeholder="Enter Your Key Here"
+            required="true"
+            minLength="18"
+            maxLength="22"
           />
           <button type="submit">Find Poll</button>
         </form>

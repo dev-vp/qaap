@@ -176,7 +176,10 @@ var AccessPoll = /*#__PURE__*/function (_React$Component) {
         onChange: function onChange(evt) {
           return _this2.handleChange(evt);
         },
-        placeholder: "Enter Your Key Here"
+        placeholder: "Enter Your Key Here",
+        required: "true",
+        minLength: "18",
+        maxLength: "22"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "submit"
       }, "Find Poll")));
@@ -875,7 +878,9 @@ var CreatePoll = /*#__PURE__*/function (_React$Component) {
         onChange: function onChange(evt) {
           return _this2.onChange(evt);
         },
-        placeholder: "i.e. Best Camera on the Market for Mirrorless"
+        placeholder: "i.e. Best Camera on the Market for Mirrorless",
+        required: "true",
+        minLength: "6"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Type of Data Visualization"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
         name: "chartType",
         onChange: function onChange(evt) {
@@ -892,7 +897,9 @@ var CreatePoll = /*#__PURE__*/function (_React$Component) {
         onChange: function onChange(evt) {
           return _this2.onChange(evt);
         },
-        placeholder: "i.e. What is your camera of choice?"
+        placeholder: "i.e. What is your camera of choice?",
+        required: "true",
+        minLength: "8"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "option-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "VOTING OPTION(S)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
@@ -903,7 +910,9 @@ var CreatePoll = /*#__PURE__*/function (_React$Component) {
         onChange: function onChange(evt) {
           return _this2.onChange(evt);
         },
-        placeholder: "i.e. Canon EOS R"
+        placeholder: "i.e. Canon EOS R",
+        required: "true",
+        minLength: "2"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         className: "option"
       }, "Option #2:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -912,7 +921,9 @@ var CreatePoll = /*#__PURE__*/function (_React$Component) {
         onChange: function onChange(evt) {
           return _this2.onChange(evt);
         },
-        placeholder: "i.e. Nikon Z7"
+        placeholder: "i.e. Nikon Z7",
+        required: "true",
+        minLength: "2"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         className: "option-hide"
       }, "Option #3:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -947,7 +958,8 @@ var CreatePoll = /*#__PURE__*/function (_React$Component) {
           return _this2.addMoreOptions();
         }
       }, "Add More Options"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        id: "create-button"
+        id: "create-button",
+        type: "submit"
       }, "Create My Poll!")));
     }
   }]);
