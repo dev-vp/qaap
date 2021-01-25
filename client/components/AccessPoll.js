@@ -31,8 +31,11 @@ class AccessPoll extends React.Component {
     return (
       <div id="access-poll-wrapper">
         <form id="access-poll-form" onSubmit={evt => this.submitHandler(evt)}>
-          <label>Key: </label>
-          <input name="key" onChange={evt => this.handleChange(evt)} />
+          <input
+            name="key"
+            onChange={evt => this.handleChange(evt)}
+            placeholder="Enter Your Key Here"
+          />
           <button type="submit">Find Poll</button>
         </form>
       </div>
