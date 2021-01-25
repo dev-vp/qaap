@@ -11,15 +11,14 @@
 
 ## Challenges
 
-* Polling
-* Notify / Listen
+* **Polling:** (Client actively and continuously sampling the database for updates/changes.) This is resource intensive and not scalable.
+* **PSQL Notify / Listen:** There is a queue that holds notifications that have been sent but not yet processed by all listening sessions. If this queue becomes full, transactions calling NOTIFY will fail at commit. The queue is quite large (8GB in a standard installation) and should be sufficiently sized for almost every use case. However, no cleanup can take place if a session executes LISTEN and then enters a transaction for a very long time. Once the queue is half full you will see warnings in the log file pointing you to the session that is preventing cleanup. In this case you should make sure that this session ends its current transaction so that cleanup can proceed. [Source](https://www.postgresql.org/docs/9.4/sql-notify.html) **Therefore, this approach is inherently non-scaleable.**
 
-## Alternative
+## Alternative (The Solution)
 
-Instead of executing 'polling',
-Instead of using 'notify/listen'
+**Socket.io:** Leveraging cross-browser compatibility to provide real-time input/output without passing through the database.
 
-## Communication Flow
+### Communication Flow
 
 1.  Participant Vote is Submitted
 2.  Redirect Participant to a 'Thank You for Voting' page (\* Ignored for ease of testing voting functionality)
