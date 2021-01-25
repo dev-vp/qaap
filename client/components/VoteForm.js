@@ -38,19 +38,19 @@ class VoteForm extends React.Component {
 
   render() {
     return (
-      <div>
+      <div id="vote-form">
         <h3>{this.state.poll.title}</h3>
         <h1>{this.state.poll.question}</h1>
         {this.state.options.map(opt => {
           return (
-            <div key={opt.id}>
-              <label>{opt.option}</label>
+            <div className="vote-button" key={opt.id}>
+              {/* <label>{opt.option}</label> */}
               <button
                 type="button"
                 value={opt.vote.id}
                 onClick={evt => this.voteHandler(evt)}
               >
-                Vote
+                {opt.option}
               </button>
             </div>
           )
