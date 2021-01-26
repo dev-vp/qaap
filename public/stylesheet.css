@@ -354,3 +354,45 @@ button {
 #confirm-wrapper > a:active {
   box-shadow: none;
 }
+
+/* ------------------------------------------- */
+/* -------- CONFIRM VOTE PAGE LAYOUT --------- */
+/* ------------------------------------------- */
+#confirm-vote {
+  text-align: center;
+}
+
+#confirm-vote > h2 {
+  font-family: Helvetica;
+  font-size: 28px;
+  margin-top: 30vh;
+  padding: 0px 8px;
+  color: gray;
+  text-shadow: 2px 2px 3px lightgrey;
+}
+
+/* ------------------------------------------- */
+/* ---------- NOT FOUND PAGE LAYOUT ---------- */
+/* ------------------------------------------- */
+#not-found {
+  text-align: center;
+  font-family: Helvetica;
+}
+
+#not-found > h2 {
+  color: rgb(118, 1, 1);
+  text-shadow: 2px 2px 3px gray;
+}
+
+#not-found > p {
+  color: gray;
+  text-shadow: 2px 2px 3px lightgrey;
+}
+
+hr {
+  border-top: 1px dotted white;
+}
+
+#incorrect-key {
+  color: black;
+}

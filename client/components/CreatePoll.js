@@ -70,7 +70,7 @@ class CreatePoll extends React.Component {
             name="title"
             onChange={evt => this.onChange(evt)}
             placeholder="i.e. Best Camera on the Market for Mirrorless"
-            required="true"
+            required={true}
             minLength="6"
           />
 
@@ -87,7 +87,7 @@ class CreatePoll extends React.Component {
               name="question"
               onChange={evt => this.onChange(evt)}
               placeholder="i.e. What is your camera of choice?"
-              required="true"
+              required={true}
               minLength="8"
             />
           </span>
@@ -100,7 +100,7 @@ class CreatePoll extends React.Component {
               name="option1"
               onChange={evt => this.onChange(evt)}
               placeholder="i.e. Canon EOS R"
-              required="true"
+              required={true}
               minLength="2"
             />
             <label className="option">Option #2:</label>
@@ -109,7 +109,7 @@ class CreatePoll extends React.Component {
               name="option2"
               onChange={evt => this.onChange(evt)}
               placeholder="i.e. Nikon Z7"
-              required="true"
+              required={true}
               minLength="2"
             />
             <label className="option-hide">Option #3:</label>

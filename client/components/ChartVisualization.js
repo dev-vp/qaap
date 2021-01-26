@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {ChartBar, ChartPie} from './index'
+import {ChartBar, ChartPie, NotFound} from './index'
 import {findPoll, submitVote} from '../redux/poll'
 import socket from '../socket'
 
@@ -51,18 +51,19 @@ class ChartVisualization extends React.Component {
     })
   }
 
+  // eslint-disable-next-line complexity
   render() {
     return (
       <div id="chart-visualization">
         <h3 id="poll-title">
-          {this.state.poll
-            ? `${this.state.poll.title}`.toUpperCase()
-            : 'Loading'}
+          {this.state.poll ? `${this.state.poll.title}`.toUpperCase() : <hr />}
         </h3>
         <h1 id="poll-question">
-          {this.state.poll
-            ? `${this.state.poll.question}`.toUpperCase()
-            : 'Loading'}
+          {this.state.poll ? (
+            `${this.state.poll.question}`.toUpperCase()
+          ) : (
+            <hr />
+          )}
         </h1>
         <div id="selection-wrapper">
           <button
@@ -84,15 +85,19 @@ class ChartVisualization extends React.Component {
         </div>
         <div id="pie-label" />
         <div>
-          {this.state.pollType === 'bar' && this.state.fetched ? (
+          {this.state.pollType === 'bar' &&
+          this.state.fetched &&
+          this.state.poll !== undefined ? (
             <ChartBar poll={this.state.poll} skey={this.state.key} />
           ) : (
-            <h1 />
+            <hr />
           )}
-          {this.state.pollType === 'pie' && this.state.fetched ? (
+          {this.state.pollType === 'pie' &&
+          this.state.fetched &&
+          this.state.poll !== undefined ? (
             <ChartPie poll={this.state.poll} skey={this.state.key} />
           ) : (
-            <h1 />
+            <NotFound />
           )}
         </div>
       </div>
