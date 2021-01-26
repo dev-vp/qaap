@@ -178,8 +178,8 @@ var AccessPoll = /*#__PURE__*/function (_React$Component) {
         },
         placeholder: "Enter Your Key Here",
         required: true,
-        minLength: "18",
-        maxLength: "22"
+        minLength: "12",
+        maxLength: "28"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "submit"
       }, "Find Poll")));
@@ -1241,7 +1241,7 @@ var NotFound = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "not-found"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Nothing Here"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Please check your key, and try again."));
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Nothing Here"));
     }
   }]);
 

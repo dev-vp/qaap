@@ -5,7 +5,7 @@ class NotFound extends React.Component {
     return (
       <div id="not-found">
         <h2>Nothing Here</h2>
-        <p>Please check your key, and try again.</p>
+        {/* <p>Please check your key, and try again.</p> */}
       </div>
     )
   }
